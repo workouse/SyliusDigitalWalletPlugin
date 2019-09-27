@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="eres_sylius_credit_balance_credit")
+ * @ORM\Table(name="eres_digital_wallet_credit")
  */
 class Credit implements CreditInterface
 {

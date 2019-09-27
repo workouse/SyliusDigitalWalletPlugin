@@ -14,3 +14,9 @@ eres_digital_wallet:
       amount: Amount
       currency_code: Currency Code
       action: Action
+  shop:
+    ui:
+      wallet: Wallet
+      available_balance: Available Balance
+      use: Use
+      remove: Remove

@@ -6,7 +6,9 @@ namespace Acme\SyliusExamplePlugin\Controller;
 use Acme\SyliusExamplePlugin\Entity\Credit;
 use Acme\SyliusExamplePlugin\Form\Type\CreditType;
 use Proxies\__CG__\Sylius\Component\Core\Model\Customer;
+use Sylius\Component\Order\Model\Adjustment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
@@ -68,5 +70,58 @@ class WalletController extends AbstractController
             'form' => $form->createView(),
             'customer' => $customer
         ]);
+    }
+
+    public function useAction(Request $request)
+    {
+        $orderRepository = $this->container->get('sylius.repository.order');
+        $orderId = $this->get('sylius.context.cart')->getCart()->getId();
+        $order = $orderRepository->findCartById($orderId);
+        $walletBalance = $this->get('eres_digital_wallet.wallet_service')->balance();
+
+        if ($walletBalance > 0) {
+            $curretAdjustment = $order->getAdjustments()->filter(function (Adjustment $adjustment) {
+                return $adjustment->getType() === "wallet";
+            })->first();
+            if ($curretAdjustment) {
+                $curretAdjustment->setAmount(-$walletBalance);
+            } else {
+                $discount = new Adjustment();
+                $discount->setAmount(-$walletBalance);
+                $discount->setType("wallet");
+                $order->addAdjustment($discount);
+            }
+        }
+
+        $this->getDoctrine()->getManager()->flush();
+
+        /** @var FlashBagInterface $flashBag */
+        $flashBag = $request->getSession()->getBag('flashes');
+        $flashBag->add('success', 'eres_digital_wallet.balance_used');
+
+        return new RedirectResponse($this->generateUrl('sylius_shop_cart_summary'));
+
+    }
+
+    public function removeAction(Request $request)
+    {
+        $orderRepository = $this->container->get('sylius.repository.order');
+        $orderId = $this->get('sylius.context.cart')->getCart()->getId();
+        $order = $orderRepository->findCartById($orderId);
+
+        $curretAdjustment = $order->getAdjustments()->filter(function (Adjustment $adjustment) {
+            return $adjustment->getType() === "wallet";
+        })->first();
+
+        if ($curretAdjustment) {
+            $order->removeAdjustment($curretAdjustment);
+            $this->getDoctrine()->getManager()->flush();
+        }
+
+        /** @var FlashBagInterface $flashBag */
+        $flashBag = $request->getSession()->getBag('flashes');
+        $flashBag->add('success', 'eres_digital_wallet.balance_removed');
+
+        return new RedirectResponse($this->generateUrl('sylius_shop_cart_summary'));
     }
 }

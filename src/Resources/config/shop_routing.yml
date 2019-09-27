@@ -1,0 +1,9 @@
+eres_digital_wallet_credit_use:
+  path: /credit/use
+  defaults:
+    _controller: AcmeSyliusExamplePlugin:Wallet:use
+
+eres_digital_wallet_credit_remove:
+  path: /credit/remove
+  defaults:
+    _controller: AcmeSyliusExamplePlugin:Wallet:remove

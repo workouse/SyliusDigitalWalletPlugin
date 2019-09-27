@@ -19,3 +19,10 @@ services:
       - '@doctrine.orm.default_entity_manager'
       - '@sylius.currency_converter'
       - '@sylius.context.currency'
+
+  eres_digital_wallet.block_event_listener.sylius.shop.cart.summary.totals:
+    class: Sylius\Bundle\UiBundle\Block\BlockEventListener
+    arguments:
+      - 'AcmeSyliusExamplePlugin:shop:cart_summary_credit.html.twig'
+    tags:
+      - { name: kernel.event_listener, event: sonata.block.event.sylius.shop.cart.summary.totals, method: onBlockEvent }

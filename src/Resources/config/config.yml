@@ -1,0 +1,3 @@
+twig:
+  globals:
+    eres_digital_wallet: '@eres_digital_wallet.wallet_service'

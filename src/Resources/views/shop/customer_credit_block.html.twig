@@ -1,0 +1,9 @@
+{% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
+
+<div class="ui large list">
+    <div class="item">
+        {{ 'eres_digital_wallet.admin.ui.credit'|trans }}:
+        <b>{{ money.format(eres_digital_wallet.balance, sylius.currencyCode) }}</b>
+    </div>
+</div>
+

@@ -3,3 +3,19 @@ services:
     class: Acme\SyliusExamplePlugin\Menu\AdminCustomerShowMenuListener
     tags:
       - { name: kernel.event_listener, event: sylius.menu.admin.customer.show, method: addAdminCustomerShowMenuItems }
+
+  eres_digital_wallet.block_event_listener.sylius.shop.account.dashboard.after_information:
+    class: Sylius\Bundle\UiBundle\Block\BlockEventListener
+    arguments:
+      - 'AcmeSyliusExamplePlugin:shop:customer_credit_block.html.twig'
+    tags:
+      - { name: kernel.event_listener, event: sonata.block.event.sylius.shop.account.dashboard.after_information, method: onBlockEvent }
+
+  eres_digital_wallet.wallet_service:
+    class: Acme\SyliusExamplePlugin\Service\WalletService
+    public: true
+    arguments:
+      - '@security.helper'
+      - '@doctrine.orm.default_entity_manager'
+      - '@sylius.currency_converter'
+      - '@sylius.context.currency'

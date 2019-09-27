@@ -15,9 +15,6 @@ class WalletController extends AbstractController
 {
     public function indexAction($customerId): Response
     {
-        $currencyConverter = $this->get('sylius.currency_converter');
-        $currencyCode = $this->get('sylius.context.currency')->getCurrencyCode();
-
         $customer = $this->getDoctrine()->getRepository(Customer::class)->findOneBy([
             'id' => $customerId
         ]);
@@ -29,15 +26,10 @@ class WalletController extends AbstractController
         $credits = $this->getDoctrine()->getRepository(Credit::class)->findBy([
             'customer' => $customer
         ]);
-        $totalAmount = 0;
-        foreach ($credits as $credit) {
-            $totalAmount += $currencyConverter->convert($credit->getAmount(), $credit->getCurrencyCode(), $currencyCode);
-        }
 
         return $this->render('@AcmeSyliusExamplePlugin/admin/index.html.twig', [
             'credits' => $credits,
-            'customer' => $customer,
-            'totalAmount' => $totalAmount
+            'customer' => $customer
         ]);
     }
 

@@ -58,7 +58,7 @@
                         {{ 'eres_digital_wallet.admin.ui.total'|trans }}
                     </td>
                     <td colspan="2">
-                        <b>{{ money.format(totalAmount, sylius.currencyCode) }}</b>
+                        <b>{{ money.format(eres_digital_wallet.balance(customer), sylius.currencyCode) }}</b>
                     </td>
                 </tr>
 

@@ -1,0 +1,16 @@
+eres_digital_wallet:
+  admin:
+    menu:
+      credits: Credits
+    ui:
+      credit: Credit
+      amount: Amount
+      currency_code: Currency Code
+      action: Action
+      total: Total
+      new_credit: New Credit
+      new: New
+    form:
+      amount: Amount
+      currency_code: Currency Code
+      action: Action

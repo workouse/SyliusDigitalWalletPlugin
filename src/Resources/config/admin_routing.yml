@@ -1,1 +1,12 @@
-# Define your own admin routes here
+eres_digital_wallet_credit_index:
+  path: /customers/{customerId}/credit
+  defaults:
+    _controller: AcmeSyliusExamplePlugin:Wallet:index
+    customerId: ~
+
+
+eres_digital_wallet_credit_new:
+  path: /customers/{customerId}/credit/new
+  defaults:
+    _controller: AcmeSyliusExamplePlugin:Wallet:new
+    customerId: ~

@@ -1,0 +1,5 @@
+services:
+  eres_digital_wallet.listener.admin.customer.show.menu_builder:
+    class: Acme\SyliusExamplePlugin\Menu\AdminCustomerShowMenuListener
+    tags:
+      - { name: kernel.event_listener, event: sylius.menu.admin.customer.show, method: addAdminCustomerShowMenuItems }

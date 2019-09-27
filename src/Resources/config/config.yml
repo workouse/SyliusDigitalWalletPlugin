@@ -1,3 +1,12 @@
 twig:
   globals:
     eres_digital_wallet: '@eres_digital_wallet.wallet_service'
+
+winzou_state_machine:
+  sylius_order_payment:
+    callbacks:
+      after:
+        app_out_of_stock_email:
+          on: ['pay']
+          do: ['@eres_digital_wallet.wallet_service', 'detractBalance']
+          args: ['object']

@@ -1,22 +1,23 @@
 {% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
+{% if is_granted('ROLE_USER') %}
+    {{ 'eres_digital_wallet.shop.ui.available_balance'|trans }}
+    <b>{{ money.format(eres_digital_wallet.balance, sylius.currencyCode) }}</b>
+    <br>
+    <a href="{{ path('eres_digital_wallet_credit_use') }}">{{ 'eres_digital_wallet.shop.ui.use'|trans }}</a> |
+    <a href="{{ path('eres_digital_wallet_credit_remove') }}">{{ 'eres_digital_wallet.shop.ui.remove'|trans }}</a>
 
-{{ 'eres_digital_wallet.shop.ui.available_balance'|trans }}
-<b>{{ money.format(eres_digital_wallet.balance, sylius.currencyCode) }}</b>
-<br>
-<a href="{{ path('eres_digital_wallet_credit_use') }}">{{ 'eres_digital_wallet.shop.ui.use'|trans }}</a> |
-<a href="{{ path('eres_digital_wallet_credit_remove') }}">{{ 'eres_digital_wallet.shop.ui.remove'|trans }}</a>
-
-<table class="ui very basic table">
-    <tbody>
-    {% for adjustment in settings.cart.adjustments %}
-        {% if adjustment.type == 'wallet' %}
-            <tr>
-                <td>{{ 'eres_digital_wallet.shop.ui.wallet'|trans }}:</td>
-                <td class="right aligned">{{ money.format(adjustment.amount, sylius.currencyCode) }}</td>
-            </tr>
-        {% endif %}
-    {% endfor %}
+    <table class="ui very basic table">
+        <tbody>
+        {% for adjustment in settings.cart.adjustments %}
+            {% if adjustment.type == 'wallet' %}
+                <tr>
+                    <td>{{ 'eres_digital_wallet.shop.ui.wallet'|trans }}:</td>
+                    <td class="right aligned">{{ money.format(adjustment.amount, sylius.currencyCode) }}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
 
 
-    </tbody>
-</table>
+        </tbody>
+    </table>
+{% endif %}

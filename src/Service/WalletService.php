@@ -4,10 +4,13 @@
 namespace Acme\SyliusExamplePlugin\Service;
 
 use Acme\SyliusExamplePlugin\Entity\Credit;
+use Acme\SyliusExamplePlugin\Entity\CreditInterface;
 use Doctrine\ORM\EntityManager;
 use Sylius\Component\Currency\Context\CurrencyContextInterface;
 use Sylius\Component\Currency\Converter\CurrencyConverterInterface;
+use Sylius\Component\Order\Model\Adjustment;
 use Symfony\Component\Security\Core\Security;
+use Sylius\Component\Core\Model\OrderInterface;
 
 class WalletService
 {
@@ -43,6 +46,27 @@ class WalletService
         }, $this->entityManager->getRepository(Credit::class)->findBy([
             'customer' => $customer ? $customer : $this->security->getUser()->getCustomer()
         ])));
+    }
+
+    public function detractBalance(OrderInterface $order)
+    {
+        $adjustment = $order->getAdjustments()->filter(function (Adjustment $adjustment) {
+            return $adjustment->getType() === 'wallet';
+        })->first();
+
+        if (!$adjustment) {
+            return;
+        }
+
+        $order->removeAdjustment($adjustment);
+
+        $credit = new Credit();
+        $credit->setCustomer($order->getUser()->getCustomer());
+        $credit->setAmount(-$adjustment->getAmount() > $order->getTotal() ? -$order->getTotal() : $adjustment->getAmount());
+        $credit->setAction(CreditInterface::BUY);
+        $credit->setCurrencyCode($this->currencyContext->getCurrencyCode());
+        $this->entityManager->persist($credit);
+        $this->entityManager->flush();
     }
 
 }

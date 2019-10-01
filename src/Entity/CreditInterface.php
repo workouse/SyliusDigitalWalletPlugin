@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Acme\SyliusExamplePlugin\Entity;
+namespace Workouse\DigitalWalletPlugin\Entity;
 
 use Sylius\Component\Resource\Model\ResourceInterface;
 

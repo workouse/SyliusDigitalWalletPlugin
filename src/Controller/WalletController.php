@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Acme\SyliusExamplePlugin\Controller;
+namespace Workouse\DigitalWalletPlugin\Controller;
 
-use Acme\SyliusExamplePlugin\Entity\Credit;
-use Acme\SyliusExamplePlugin\Form\Type\CreditType;
+use Workouse\DigitalWalletPlugin\Entity\Credit;
+use Workouse\DigitalWalletPlugin\Form\Type\CreditType;
 use Proxies\__CG__\Sylius\Component\Core\Model\Customer;
 use Sylius\Component\Order\Model\Adjustment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,7 +29,7 @@ class WalletController extends AbstractController
             'customer' => $customer
         ]);
 
-        return $this->render('@AcmeSyliusExamplePlugin/admin/index.html.twig', [
+        return $this->render('@WorkouseDigitalWalletPlugin/admin/index.html.twig', [
             'credits' => $credits,
             'customer' => $customer
         ]);
@@ -63,10 +63,10 @@ class WalletController extends AbstractController
             $flashBag = $request->getSession()->getBag('flashes');
             $flashBag->add('success', '');
 
-            return $this->redirectToRoute('eres_digital_wallet_credit_index', ['customerId' => $customerId]);
+            return $this->redirectToRoute('workouse_digital_wallet_credit_index', ['customerId' => $customerId]);
         }
 
-        return $this->render('@AcmeSyliusExamplePlugin/admin/new.html.twig', [
+        return $this->render('@WorkouseDigitalWalletPlugin/admin/new.html.twig', [
             'form' => $form->createView(),
             'customer' => $customer
         ]);
@@ -77,7 +77,7 @@ class WalletController extends AbstractController
         $orderRepository = $this->container->get('sylius.repository.order');
         $orderId = $this->get('sylius.context.cart')->getCart()->getId();
         $order = $orderRepository->findCartById($orderId);
-        $walletBalance = $this->get('eres_digital_wallet.wallet_service')->balance();
+        $walletBalance = $this->get('workouse_digital_wallet.wallet_service')->balance();
 
         if ($walletBalance > 0) {
             $curretAdjustment = $order->getAdjustments()->filter(function (Adjustment $adjustment) {
@@ -97,7 +97,7 @@ class WalletController extends AbstractController
 
         /** @var FlashBagInterface $flashBag */
         $flashBag = $request->getSession()->getBag('flashes');
-        $flashBag->add('success', 'eres_digital_wallet.balance_used');
+        $flashBag->add('success', 'workouse_digital_wallet.balance_used');
 
         return new RedirectResponse($this->generateUrl('sylius_shop_cart_summary'));
 
@@ -120,7 +120,7 @@ class WalletController extends AbstractController
 
         /** @var FlashBagInterface $flashBag */
         $flashBag = $request->getSession()->getBag('flashes');
-        $flashBag->add('success', 'eres_digital_wallet.balance_removed');
+        $flashBag->add('success', 'workouse_digital_wallet.balance_removed');
 
         return new RedirectResponse($this->generateUrl('sylius_shop_cart_summary'));
     }

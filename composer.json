@@ -1,8 +1,8 @@
 {
-    "name": "sylius/plugin-skeleton",
+    "name": "workouse/digital-wallet-sylius",
     "type": "sylius-plugin",
     "keywords": ["sylius", "sylius-plugin"],
-    "description": "Acme example plugin for Sylius.",
+    "description": "Digital Wallet Bundle for Sylius E-Commerce",
     "license": "MIT",
     "require": {
         "php": "^7.2",
@@ -44,8 +44,8 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Acme\\SyliusExamplePlugin\\": "src/",
-            "Tests\\Acme\\SyliusExamplePlugin\\": "tests/"
+            "Workouse\\DigitalWalletPlugin\\": "src/",
+            "Tests\\Workouse\\DigitalWalletPlugin\\": "tests/"
         }
     },
     "autoload-dev": {

@@ -1,2 +1,2 @@
-eres_digital_wallet_plugin_admin:
-  resource: "@AcmeSyliusExamplePlugin/Resources/config/routing.yml"
+workouse_digital_wallet_plugin_admin:
+  resource: "@WorkouseDigitalWalletPlugin/Resources/config/routing.yml"

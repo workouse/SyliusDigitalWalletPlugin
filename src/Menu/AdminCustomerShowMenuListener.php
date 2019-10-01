@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Acme\SyliusExamplePlugin\Menu;
+namespace Workouse\DigitalWalletPlugin\Menu;
 
 use Sylius\Bundle\AdminBundle\Event\CustomerShowMenuBuilderEvent;
 
@@ -15,11 +15,11 @@ final class AdminCustomerShowMenuListener
         if (null !== $customer->getUser()) {
             $menu
                 ->addChild('impersonate', [
-                    'route' => 'eres_digital_wallet_credit_index',
+                    'route' => 'workouse_digital_wallet_credit_index',
                     'routeParameters' => ['customerId' => $customer->getId()]
                 ])
                 ->setAttribute('type', 'link')
-                ->setLabel('eres_digital_wallet.admin.menu.credits')
+                ->setLabel('workouse_digital_wallet.admin.menu.credits')
                 ->setLabelAttribute('icon', 'unhide')
                 ->setLabelAttribute('color', 'blue');
         }

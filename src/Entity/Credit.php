@@ -1,12 +1,12 @@
 <?php
 
-namespace Acme\SyliusExamplePlugin\Entity;
+namespace Workouse\DigitalWalletPlugin\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="eres_digital_wallet_credit")
+ * @ORM\Table(name="workouse_digital_wallet_credit")
  */
 class Credit implements CreditInterface
 {

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Acme\SyliusExamplePlugin\Form\Type;
+namespace Workouse\DigitalWalletPlugin\Form\Type;
 
 
 use Sylius\Component\Currency\Model\Currency;
@@ -18,14 +18,14 @@ class CreditType extends AbstractType
     {
         $builder
             ->add('amount', TextType::class, [
-                'label' => 'eres_digital_wallet.admin.form.amount',
+                'label' => 'workouse_digital_wallet.admin.form.amount',
                 'constraints' => [
                     new NotBlank(),
                     new Positive()
                 ],
             ])
             ->add('currencyCode', EntityType::class, [
-                'label' => 'eres_digital_wallet.admin.form.currency_code',
+                'label' => 'workouse_digital_wallet.admin.form.currency_code',
                 'class' => Currency::class,
                 'choice_label' => 'code',
                 'constraints' => [
@@ -33,7 +33,7 @@ class CreditType extends AbstractType
                 ],
             ])
             ->add('action', TextType::class, [
-                'label' => 'eres_digital_wallet.admin.form.action',
+                'label' => 'workouse_digital_wallet.admin.form.action',
                 'constraints' => [
                     new NotBlank(),
                 ],

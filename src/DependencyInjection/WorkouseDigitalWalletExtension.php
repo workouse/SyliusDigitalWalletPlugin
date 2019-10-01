@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Acme\SyliusExamplePlugin\DependencyInjection;
+namespace Workouse\DigitalWalletPlugin\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-final class AcmeSyliusExampleExtension extends Extension
+final class WorkouseDigitalWalletExtension extends Extension
 {
     /**
      * {@inheritdoc}

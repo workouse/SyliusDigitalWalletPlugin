@@ -1,12 +1,12 @@
-eres_digital_wallet_credit_index:
+workouse_digital_wallet_credit_index:
   path: /customers/{customerId}/credit
   defaults:
-    _controller: AcmeSyliusExamplePlugin:Wallet:index
+    _controller: WorkouseDigitalWalletPlugin:Wallet:index
     customerId: ~
 
 
-eres_digital_wallet_credit_new:
+workouse_digital_wallet_credit_new:
   path: /customers/{customerId}/credit/new
   defaults:
-    _controller: AcmeSyliusExamplePlugin:Wallet:new
+    _controller: WorkouseDigitalWalletPlugin:Wallet:new
     customerId: ~

@@ -9,7 +9,7 @@
             <h1 class="ui header">
                 <i class="circular money icon"></i>
                 <div class="content">
-                    {{ 'eres_digital_wallet.admin.ui.credit'|trans }}
+                    {{ 'workouse_digital_wallet.admin.ui.credit'|trans }}
                     <div class="sub header"></div>
                 </div>
             </h1>
@@ -21,13 +21,13 @@
                 <a href="{{ path('sylius_admin_customer_show', { 'id': customer.id }) }}"
                    class="section">{{ customer.email }}</a>
                 <i class="right chevron icon divider"></i>
-                <div class="active section">{{ 'eres_digital_wallet.admin.menu.credits'|trans }}</div>
+                <div class="active section">{{ 'workouse_digital_wallet.admin.menu.credits'|trans }}</div>
             </div>
         </div>
         <div class="middle aligned column">
             <div class="ui right floated buttons">
                 <a class="ui labeled icon button  primary "
-                   href="{{ path('eres_digital_wallet_credit_new', {'customerId': customer.id}) }}">
+                   href="{{ path('workouse_digital_wallet_credit_new', {'customerId': customer.id}) }}">
                     <i class="icon plus"></i>
                     Create
                 </a>
@@ -40,9 +40,9 @@
             <table class="ui sortable stackable very basic celled table">
                 <thead>
                 <tr>
-                    <th>{{ 'eres_digital_wallet.admin.ui.amount'|trans }}</th>
-                    <th>{{ 'eres_digital_wallet.admin.ui.currency_code'|trans }}</th>
-                    <th>{{ 'eres_digital_wallet.admin.ui.action'|trans }}</th>
+                    <th>{{ 'workouse_digital_wallet.admin.ui.amount'|trans }}</th>
+                    <th>{{ 'workouse_digital_wallet.admin.ui.currency_code'|trans }}</th>
+                    <th>{{ 'workouse_digital_wallet.admin.ui.action'|trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -55,10 +55,10 @@
                 {% endfor %}
                 <tr>
                     <td>
-                        {{ 'eres_digital_wallet.admin.ui.total'|trans }}
+                        {{ 'workouse_digital_wallet.admin.ui.total'|trans }}
                     </td>
                     <td colspan="2">
-                        <b>{{ money.format(eres_digital_wallet.balance(customer), sylius.currencyCode) }}</b>
+                        <b>{{ money.format(workouse_digital_wallet.balance(customer), sylius.currencyCode) }}</b>
                     </td>
                 </tr>
 

@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Acme\SyliusExamplePlugin\Service;
+namespace Workouse\DigitalWalletPlugin\Service;
 
-use Acme\SyliusExamplePlugin\Entity\Credit;
-use Acme\SyliusExamplePlugin\Entity\CreditInterface;
+use Workouse\DigitalWalletPlugin\Entity\Credit;
+use Workouse\DigitalWalletPlugin\Entity\CreditInterface;
 use Doctrine\ORM\EntityManager;
 use Sylius\Component\Currency\Context\CurrencyContextInterface;
 use Sylius\Component\Currency\Converter\CurrencyConverterInterface;

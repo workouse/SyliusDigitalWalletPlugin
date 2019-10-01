@@ -1,3 +1,11 @@
+parameters:
+  referrer_action:
+  referrer_amount:
+  referrer_currency_code:
+  invitee_action:
+  invitee_amount:
+  invitee_currency_code:
+
 services:
   workouse_digital_wallet.listener.admin.customer.show.menu_builder:
     class: Workouse\DigitalWalletPlugin\Menu\AdminCustomerShowMenuListener
@@ -26,3 +34,16 @@ services:
       - 'WorkouseDigitalWalletPlugin:shop:cart_summary_credit.html.twig'
     tags:
       - { name: kernel.event_listener, event: sonata.block.event.sylius.shop.cart.summary.totals, method: onBlockEvent }
+
+  workouse_digital_wallet.promotion:
+    class: Workouse\DigitalWalletPlugin\Service\PromotionService
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@sylius.canonicalizer'
+      - '@sylius.repository.customer'
+      - '%referrer_action%'
+      - '%referrer_amount%'
+      - '%referrer_currency_code%'
+      - '%invitee_action%'
+      - '%invitee_amount%'
+      - '%invitee_currency_code%'

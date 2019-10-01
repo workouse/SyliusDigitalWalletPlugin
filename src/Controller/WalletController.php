@@ -5,7 +5,7 @@ namespace Workouse\DigitalWalletPlugin\Controller;
 
 use Workouse\DigitalWalletPlugin\Entity\Credit;
 use Workouse\DigitalWalletPlugin\Form\Type\CreditType;
-use Proxies\__CG__\Sylius\Component\Core\Model\Customer;
+use Sylius\Component\Customer\Model\Customer;
 use Sylius\Component\Order\Model\Adjustment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;

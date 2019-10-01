@@ -1,10 +1,10 @@
 parameters:
-  referrer_action:
-  referrer_amount:
-  referrer_currency_code:
-  invitee_action:
-  invitee_amount:
-  invitee_currency_code:
+  referrer_action: '%env(DIGITAL_WALLET_SYLIUS_REFERRER_ACTION)%'
+  referrer_amount: '%env(DIGITAL_WALLET_SYLIUS_REFERRER_AMOUNT)%'
+  referrer_currency_code: '%env(DIGITAL_WALLET_SYLIUS_REFERRER_CURRENCY_CODE)%'
+  invitee_action: '%env(DIGITAL_WALLET_SYLIUS_INVITEE_ACTION)%'
+  invitee_amount: '%env(DIGITAL_WALLET_SYLIUS_INVITEE_AMOUNT)%'
+  invitee_currency_code: '%env(DIGITAL_WALLET_CURRENCY_CODE)%'
 
 services:
   workouse_digital_wallet.listener.admin.customer.show.menu_builder:

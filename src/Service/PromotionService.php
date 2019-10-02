@@ -4,13 +4,13 @@
 namespace Workouse\DigitalWalletPlugin\Service;
 
 use Doctrine\ORM\EntityManager;
-use Eres\SyliusReferralMarketingPlugin\Entity\Reference;
-use Eres\SyliusReferralMarketingPlugin\Service\PromotionInterface;
 use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Sylius\Component\Customer\Model\Customer;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\User\Canonicalizer\CanonicalizerInterface;
 use Workouse\DigitalWalletPlugin\Entity\Credit;
+use Workouse\ReferralMarketingPlugin\Entity\Reference;
+use Workouse\ReferralMarketingPlugin\Service\PromotionInterface;
 
 class PromotionService implements PromotionInterface
 {
@@ -23,48 +23,33 @@ class PromotionService implements PromotionInterface
     /** @var CustomerRepositoryInterface */
     private $customerRepository;
 
-    private $referrerAction;
+    private $referrer;
 
-    private $referrerAmount;
+    private $invitee;
 
-    private $referrerCurrencyCode;
-
-    private $inviteeAction;
-
-    private $inviteeAmount;
-
-    private $inviteeCurrencyCode;
 
     public function __construct(
         EntityManager $entityManager,
         CanonicalizerInterface $canonicalizer,
         RepositoryInterface $customerRepository,
-        $referrerAction,
-        $referrerAmount,
-        $referrerCurrencyCode,
-        $inviteeAction,
-        $inviteeAmount,
-        $inviteeCurrencyCode
+        $referrer,
+        $invitee
     )
     {
         $this->entityManager = $entityManager;
         $this->canonicalizer = $canonicalizer;
         $this->customerRepository = $customerRepository;
-        $this->referrerAction = $referrerAction;
-        $this->referrerAmount = $referrerAmount;
-        $this->referrerCurrencyCode = $referrerCurrencyCode;
-        $this->inviteeAction = $inviteeAction;
-        $this->inviteeAmount = $inviteeAmount;
-        $this->inviteeCurrencyCode = $inviteeCurrencyCode;
+        $this->referrer = $referrer;
+        $this->invitee = $invitee;
     }
 
     function execute(Reference $reference)
     {
         $credit = new Credit();
         $credit->setCustomer($reference->getInvitee());
-        $credit->setAction($this->inviteeAction);
-        $credit->setAmount($this->inviteeAction);
-        $credit->setCurrencyCode($this->inviteeCurrencyCode);
+        $credit->setAction($this->invitee['action']);
+        $credit->setAmount($this->invitee['amount']);
+        $credit->setCurrencyCode($this->invitee['currency_code']);
         $this->entityManager->persist($credit);
 
         $customer = new Customer();
@@ -75,9 +60,9 @@ class PromotionService implements PromotionInterface
 
         $credit = new Credit();
         $credit->setCustomer($this->customerRepository->findOneBy(['id' => $customer->getId()]));
-        $credit->setAction($this->referrerAction);
-        $credit->setAmount($this->referrerAmount);
-        $credit->setCurrencyCode($this->referrerCurrencyCode);
+        $credit->setAction($this->referrer['action']);
+        $credit->setAmount($this->referrer['amount']);
+        $credit->setCurrencyCode($this->referrer['currency_code']);
         $this->entityManager->persist($credit);
 
         $this->entityManager->flush();

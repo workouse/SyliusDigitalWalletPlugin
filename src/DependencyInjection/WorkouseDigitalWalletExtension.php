@@ -20,5 +20,9 @@ final class WorkouseDigitalWalletExtension extends Extension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
         $loader->load('services.yml');
+
+        foreach ($config as $key => $value) {
+            $container->setParameter('workouse_digital_wallet.' . $key, $value);
+        }
     }
 }

@@ -17,6 +17,6 @@ workouse_digital_wallet:
   shop:
     ui:
       wallet: Cüzdan
-      available_balance: Kalan bakiye
+      available_balance: Kullanılabilir bakiye
       use: Kullan
       remove: Kaldır

@@ -1,0 +1,22 @@
+workouse_digital_wallet:
+  admin:
+    menu:
+      credits: Krediler
+    ui:
+      credit: Kredi
+      amount: Tutar
+      currency_code: Para Birimi Kodu
+      action: İşem
+      total: Topman
+      new_credit: Yeni Kredi
+      new: Yeni
+    form:
+      amount: Tutar
+      currency_code: Para Birimi Kodu
+      action: İşlem
+  shop:
+    ui:
+      wallet: Cüzdan
+      available_balance: Kalan bakiye
+      use: Kullan
+      remove: Kaldır

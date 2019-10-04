@@ -44,11 +44,11 @@ workouse_digital_wallet:
     referrer:
         action: 'reference'
         amount: 500
-        currency_code: 'TRY'
+        currency_code: 'USD'
     invitee:
         action: 'reference'
         amount: 100
-        currency_code: 'TRY'
+        currency_code: 'USD'
 ```
 
 if want to associate with [referral-marketing-sylius](https://github.com/workouse/referral-marketing-sylius), you need to apply the setting below 

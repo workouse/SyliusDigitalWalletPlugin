@@ -66,3 +66,17 @@ $ bin/console doctrine:migrations:diff
 $ bin/console doctrine:migrations:migrate
 $ bin/console cache:clear
 ```
+
+## Testing & running the plugin
+```bash
+$ composer install
+$ cd tests/Application
+$ yarn
+$ yarn build
+$ bin/console assets:install public -e test
+$ bin/console doctrine:database:create -e test
+$ bin/console doctrine:schema:create -e test
+$ bin/console server:run 127.0.0.1:8080 -d public -e test
+$ open http://localhost:8080
+$ vendor/bin/behat
+```

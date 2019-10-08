@@ -20,8 +20,12 @@ class CreditType extends AbstractType
             ->add('amount', TextType::class, [
                 'label' => 'workouse_digital_wallet.admin.form.amount',
                 'constraints' => [
-                    new NotBlank(),
-                    new Positive()
+                    new NotBlank([
+                        'message' => 'workouse_digital_wallet.amount.not_blank'
+                    ]),
+                    new Positive([
+                        'message' => 'workouse_digital_wallet.amount.positive'
+                    ])
                 ],
             ])
             ->add('currencyCode', EntityType::class, [
@@ -29,13 +33,17 @@ class CreditType extends AbstractType
                 'class' => Currency::class,
                 'choice_label' => 'code',
                 'constraints' => [
-                    new NotBlank(),
+                    new NotBlank([
+                        'message' => 'workouse_digital_wallet.currency_code.not_blank'
+                    ]),
                 ],
             ])
             ->add('action', TextType::class, [
                 'label' => 'workouse_digital_wallet.admin.form.action',
                 'constraints' => [
-                    new NotBlank(),
+                    new NotBlank([
+                        'message' => 'workouse_digital_wallet.action.not_blank'
+                    ]),
                 ],
             ]);
     }

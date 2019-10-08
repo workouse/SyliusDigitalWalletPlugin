@@ -1,0 +1,7 @@
+workouse_digital_wallet:
+  amount:
+    not_blank: Tutar boş olamaz.
+  currency_code:
+    not_blank: Para Birimi boş olamaz.
+  action:
+    not_blank: İşlem boş olamaz.

@@ -3,10 +3,10 @@
 
 namespace Workouse\DigitalWalletPlugin\Controller;
 
+use Sylius\Component\Core\Model\Customer;
+use Sylius\Component\Order\Model\Adjustment;
 use Workouse\DigitalWalletPlugin\Entity\Credit;
 use Workouse\DigitalWalletPlugin\Form\Type\CreditType;
-use Sylius\Component\Customer\Model\Customer;
-use App\Entity\Order\Adjustment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,7 +61,7 @@ class WalletController extends AbstractController
 
             /** @var FlashBagInterface $flashBag */
             $flashBag = $request->getSession()->getBag('flashes');
-            $flashBag->add('success', '');
+            $flashBag->add('success', 'workouse_digital_wallet.credit_added');
 
             return $this->redirectToRoute('workouse_digital_wallet_credit_index', ['customerId' => $customerId]);
         }

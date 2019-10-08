@@ -1,0 +1,8 @@
+workouse_digital_wallet:
+  amount:
+    not_blank: Amount cannot be blank.
+    positive: Amount sould be positive.
+  currency_code:
+    not_blank: Currency Code cannot be blank.
+  action:
+    not_blank: Action cannot be blank.

@@ -1,6 +1,6 @@
 {% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
 
-<div class="ui large list">
+<div class="ui large list" id="customer-credit">
     <div class="item">
         {{ 'workouse_digital_wallet.admin.ui.credit'|trans }}:
         <b>{{ money.format(workouse_digital_wallet.balance, sylius.currencyCode) }}</b>

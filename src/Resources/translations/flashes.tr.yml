@@ -1,3 +1,4 @@
 workouse_digital_wallet:
   balance_used: 'Bakiye kullanıldı'
   balance_removed: 'Bakiye kaldırıldı'
+  credit_added: 'Kredi başarıyla eklendi.'

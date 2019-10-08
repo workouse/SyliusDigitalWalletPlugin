@@ -1,0 +1,36 @@
+services:
+  workouse_digital_wallet_plugin.context.ui.shop.wallet:
+    class: Tests\Workouse\DigitalWalletPlugin\Behat\Context\Ui\Shop\WalletContext
+    public: true
+    arguments:
+      - '@workouse_digital_wallet_plugin.behat.page.shop.account.dashboard'
+      - '@doctrine.orm.default_entity_manager'
+      - '@workouse_digital_wallet_plugin.behat.page.shop.account.wallet_use'
+      - '@sylius.behat.notification_checker'
+      - '@sylius.repository.shop_user'
+      - '@workouse_digital_wallet_plugin.behat.page.shop.account.wallet_remove'
+
+  workouse_digital_wallet_plugin.context.ui.admin.wallet:
+    class: Tests\Workouse\DigitalWalletPlugin\Behat\Context\Ui\admin\WalletContext
+    public: true
+    arguments:
+      - '@sylius.behat.shared_storage'
+      - '@sylius.behat.current_page_resolver'
+      - '@sylius.behat.notification_checker'
+      - '@workouse_digital_wallet_plugin.behat.page.shop.account.wallet_new'
+
+  workouse_digital_wallet_plugin.behat.page.shop.account.dashboard:
+    class: Tests\Workouse\DigitalWalletPlugin\Behat\Page\Shop\DashboardPage
+    parent: sylius.behat.page.shop.account.dashboard
+
+  workouse_digital_wallet_plugin.behat.page.shop.account.wallet_new:
+    class: Tests\Workouse\DigitalWalletPlugin\Behat\Page\Admin\WalletNewPage
+    parent: sylius.behat.symfony_page
+
+  workouse_digital_wallet_plugin.behat.page.shop.account.wallet_use:
+    class: Tests\Workouse\DigitalWalletPlugin\Behat\Page\Shop\WalletUsePage
+    parent: sylius.behat.symfony_page
+
+  workouse_digital_wallet_plugin.behat.page.shop.account.wallet_remove:
+    class: Tests\Workouse\DigitalWalletPlugin\Behat\Page\Shop\WalletRemovePage
+    parent: sylius.behat.symfony_page

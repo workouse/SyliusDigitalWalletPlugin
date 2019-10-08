@@ -1,0 +1,9 @@
+workouse_digital_wallet:
+  referrer:
+    action: 'reference'
+    amount: 500
+    currency_code: 'USD'
+  invitee:
+    action: 'reference'
+    amount: 100
+    currency_code: 'USD'

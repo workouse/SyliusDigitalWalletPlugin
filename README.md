@@ -1,6 +1,11 @@
 ## digital-wallet-sylius
 Digital wallet plugin for for Sylius E-Commerce. Adds a credit system feature to customers.
 
+Screenshots:
+<img src="https://github.com/workouse/referral-marketing-sylius/blob/master/screenshot_1.png" width="100%">
+<img src="https://github.com/workouse/referral-marketing-sylius/blob/master/screenshot_2.png" width="100%">
+<img src="https://github.com/workouse/referral-marketing-sylius/blob/master/screenshot_3.png" width="100%">
+<img src="https://github.com/workouse/referral-marketing-sylius/blob/master/screenshot_4.png" width="100%">
 
 ## Installation
 ```bash

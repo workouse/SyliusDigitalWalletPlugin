@@ -17,7 +17,7 @@ class WalletController extends AbstractController
 {
     public function indexAction($customerId): Response
     {
-        $customer = $this->getDoctrine()->getRepository(Customer::class)->findOneBy([
+        $customer = $this->container->get('sylius.repository.customer')->findOneBy([
             'id' => $customerId
         ]);
 
@@ -38,7 +38,7 @@ class WalletController extends AbstractController
     public function newAction($customerId, Request $request): Response
     {
 
-        $customer = $this->getDoctrine()->getRepository(Customer::class)->findOneBy([
+        $customer = $this->container->get('sylius.repository.customer')->findOneBy([
             'id' => $customerId
         ]);
 
@@ -86,7 +86,7 @@ class WalletController extends AbstractController
             if ($curretAdjustment) {
                 $curretAdjustment->setAmount(-$walletBalance);
             } else {
-                $discount = new Adjustment();
+                $discount = $this->container->get('sylius.factory.adjustment')->createNew();
                 $discount->setAmount(-$walletBalance);
                 $discount->setType("wallet");
                 $order->addAdjustment($discount);

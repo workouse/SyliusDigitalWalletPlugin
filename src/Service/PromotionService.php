@@ -6,6 +6,7 @@ namespace Workouse\DigitalWalletPlugin\Service;
 use Doctrine\ORM\EntityManager;
 use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Sylius\Component\Customer\Model\Customer;
+use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\User\Canonicalizer\CanonicalizerInterface;
 use Workouse\DigitalWalletPlugin\Entity\Credit;
@@ -27,13 +28,16 @@ class PromotionService implements PromotionInterface
 
     private $invitee;
 
+    /** @var FactoryInterface */
+    private $customerFactory;
 
     public function __construct(
         EntityManager $entityManager,
         CanonicalizerInterface $canonicalizer,
         RepositoryInterface $customerRepository,
         $referrer,
-        $invitee
+        $invitee,
+        FactoryInterface $customerFactory
     )
     {
         $this->entityManager = $entityManager;
@@ -41,6 +45,7 @@ class PromotionService implements PromotionInterface
         $this->customerRepository = $customerRepository;
         $this->referrer = $referrer;
         $this->invitee = $invitee;
+        $this->customerFactory = $customerFactory;
     }
 
     function execute(Reference $reference)
@@ -52,7 +57,7 @@ class PromotionService implements PromotionInterface
         $credit->setCurrencyCode($this->invitee['currency_code']);
         $this->entityManager->persist($credit);
 
-        $customer = new Customer();
+        $customer = $this->customerFactory->createNew();
         $customer->setEmail($reference->getReferrerEmail());
         $customer->setEmailCanonical($this->canonicalizer->canonicalize($reference->getReferrerEmail()));
         $this->entityManager->persist($customer);

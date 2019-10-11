@@ -36,3 +36,4 @@ services:
       - '@sylius.repository.customer'
       - '%workouse_digital_wallet.referrer%'
       - '%workouse_digital_wallet.invitee%'
+      - '@sylius.factory.customer'

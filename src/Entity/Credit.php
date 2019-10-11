@@ -18,7 +18,7 @@ class Credit implements CreditInterface
     protected $id;
 
     /**
-     * @ORM\ManyToOne("Sylius\Component\Customer\Model\CustomerInterface")
+     * @ORM\ManyToOne("Sylius\Component\Core\Model\Customer")
      * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
      */
     protected $customer;

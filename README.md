@@ -1,3 +1,5 @@
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/workouse/digital-wallet-sylius/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/workouse/digital-wallet-sylius/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/workouse/digital-wallet-sylius/badges/build.png?b=master)](https://scrutinizer-ci.com/g/workouse/digital-wallet-sylius/build-status/master)
 ## digital-wallet-sylius
 Digital wallet plugin for for Sylius E-Commerce. Adds a credit system feature to customers.
 

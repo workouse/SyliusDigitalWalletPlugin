@@ -3,8 +3,9 @@
 
 namespace Workouse\DigitalWalletPlugin\Controller;
 
-use Sylius\Component\Core\Model\Customer;
+use Sylius\Component\Order\Context\CompositeCartContext;
 use Sylius\Component\Order\Model\Adjustment;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Workouse\DigitalWalletPlugin\Entity\Credit;
 use Workouse\DigitalWalletPlugin\Form\Type\CreditType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,6 +13,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Workouse\DigitalWalletPlugin\Service\WalletService;
 
 class WalletController extends AbstractController
 {
@@ -59,8 +61,11 @@ class WalletController extends AbstractController
             $em->persist($credit);
             $em->flush();
 
+            /** @var SessionInterface $session */
+            $session = $request->getSession();
+
             /** @var FlashBagInterface $flashBag */
-            $flashBag = $request->getSession()->getBag('flashes');
+            $flashBag = $session->getBag('flashes');
             $flashBag->add('success', 'workouse_digital_wallet.credit_added');
 
             return $this->redirectToRoute('workouse_digital_wallet_credit_index', ['customerId' => $customerId]);
@@ -75,9 +80,13 @@ class WalletController extends AbstractController
     public function useAction(Request $request)
     {
         $orderRepository = $this->container->get('sylius.repository.order');
-        $orderId = $this->get('sylius.context.cart')->getCart()->getId();
+        /** @var CompositeCartContext $compositeCartContext */
+        $compositeCartContext = $this->get('sylius.context.cart');
+        $orderId = $compositeCartContext->getCart()->getId();
         $order = $orderRepository->findCartById($orderId);
-        $walletBalance = $this->get('workouse_digital_wallet.wallet_service')->balance();
+        /** @var WalletService $walletService */
+        $walletService = $this->get('workouse_digital_wallet.wallet_service');
+        $walletBalance = $walletService->balance();
 
         if ($walletBalance > 0) {
             $curretAdjustment = $order->getAdjustments()->filter(function (Adjustment $adjustment) {
@@ -95,8 +104,11 @@ class WalletController extends AbstractController
 
         $this->getDoctrine()->getManager()->flush();
 
+        /** @var SessionInterface $session */
+        $session = $request->getSession();
+
         /** @var FlashBagInterface $flashBag */
-        $flashBag = $request->getSession()->getBag('flashes');
+        $flashBag = $session->getBag('flashes');
         $flashBag->add('success', 'workouse_digital_wallet.balance_used');
 
         return new RedirectResponse($this->generateUrl('sylius_shop_cart_summary'));
@@ -106,7 +118,9 @@ class WalletController extends AbstractController
     public function removeAction(Request $request)
     {
         $orderRepository = $this->container->get('sylius.repository.order');
-        $orderId = $this->get('sylius.context.cart')->getCart()->getId();
+        /** @var CompositeCartContext $compositeCartContext */
+        $compositeCartContext = $this->get('sylius.context.cart');
+        $orderId = $compositeCartContext->getCart()->getId();
         $order = $orderRepository->findCartById($orderId);
 
         $curretAdjustment = $order->getAdjustments()->filter(function (Adjustment $adjustment) {
@@ -118,8 +132,11 @@ class WalletController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
         }
 
+        /** @var SessionInterface $session */
+        $session = $request->getSession();
+
         /** @var FlashBagInterface $flashBag */
-        $flashBag = $request->getSession()->getBag('flashes');
+        $flashBag = $session->getBag('flashes');
         $flashBag->add('success', 'workouse_digital_wallet.balance_removed');
 
         return new RedirectResponse($this->generateUrl('sylius_shop_cart_summary'));

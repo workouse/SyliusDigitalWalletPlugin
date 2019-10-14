@@ -5,7 +5,6 @@ namespace Workouse\DigitalWalletPlugin\Service;
 
 use Doctrine\ORM\EntityManager;
 use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
-use Sylius\Component\Customer\Model\Customer;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\User\Canonicalizer\CanonicalizerInterface;

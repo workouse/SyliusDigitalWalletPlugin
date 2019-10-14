@@ -3,6 +3,7 @@
 
 namespace Workouse\DigitalWalletPlugin\Service;
 
+use Sylius\Component\Core\Model\ShopUserInterface;
 use Workouse\DigitalWalletPlugin\Entity\Credit;
 use Workouse\DigitalWalletPlugin\Entity\CreditInterface;
 use Doctrine\ORM\EntityManager;
@@ -41,10 +42,12 @@ class WalletService
 
     public function balance($customer = null)
     {
+        /** @var ShopUserInterface $user */
+        $user = $this->security->getUser();
         return array_sum(array_map(function (Credit $credit) {
             return $this->currencyConverter->convert($credit->getAmount(), $credit->getCurrencyCode(), $this->currencyContext->getCurrencyCode());
         }, $this->entityManager->getRepository(Credit::class)->findBy([
-            'customer' => $customer ? $customer : $this->security->getUser()->getCustomer()
+            'customer' => $customer ? $customer : $user->getCustomer()
         ])));
     }
 
@@ -60,8 +63,11 @@ class WalletService
 
         $order->removeAdjustment($adjustment);
 
+        /** @var ShopUserInterface $user */
+        $user = $order->getUser();
+
         $credit = new Credit();
-        $credit->setCustomer($order->getUser()->getCustomer());
+        $credit->setCustomer($user);
         $credit->setAmount(-$adjustment->getAmount() > $order->getTotal() ? -$order->getTotal() : $adjustment->getAmount());
         $credit->setAction(CreditInterface::BUY);
         $credit->setCurrencyCode($this->currencyContext->getCurrencyCode());

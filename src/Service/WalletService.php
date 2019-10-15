@@ -97,7 +97,8 @@ class WalletService
         array_map(function (OrderItem $orderItem) use ($adjustmentRate) {
             $adjustment = $this->adjustmentFactory->createNew();
             $adjustment->setType(CreditInterface::TYPE);
-            $adjustment->setAmount(-1 * ($orderItem->getTotal() / 100) * $adjustmentRate);
+            $amount = -1 * ($orderItem->getTotal() / 100) * $adjustmentRate;
+            $adjustment->setAmount((int)$amount);
             $adjustment->setLabel('Wallet');
             $orderItem->addAdjustment($adjustment);
         }, $order->getItems()->toArray());
@@ -109,7 +110,9 @@ class WalletService
     {
         array_map(function (OrderItem $orderItem) {
             array_map(function (Adjustment $adjustment) use ($orderItem) {
-                $adjustment->getType() === CreditInterface::TYPE && $orderItem->removeAdjustment($adjustment);
+                if ($adjustment->getType() === CreditInterface::TYPE){
+                    $orderItem->removeAdjustment($adjustment);
+                }
             }, $orderItem->getAdjustments()->toArray());
         }, $order->getItems()->toArray());
 

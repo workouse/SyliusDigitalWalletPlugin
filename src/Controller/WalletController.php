@@ -4,7 +4,7 @@
 namespace Workouse\DigitalWalletPlugin\Controller;
 
 use Sylius\Component\Order\Context\CompositeCartContext;
-use Sylius\Component\Order\Model\Adjustment;
+use Sylius\Component\Order\Model\Order;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Workouse\DigitalWalletPlugin\Entity\Credit;
 use Workouse\DigitalWalletPlugin\Form\Type\CreditType;
@@ -83,26 +83,12 @@ class WalletController extends AbstractController
         /** @var CompositeCartContext $compositeCartContext */
         $compositeCartContext = $this->get('sylius.context.cart');
         $orderId = $compositeCartContext->getCart()->getId();
+        /** @var Order $order */
         $order = $orderRepository->findCartById($orderId);
         /** @var WalletService $walletService */
         $walletService = $this->get('workouse_digital_wallet.wallet_service');
-        $walletBalance = $walletService->balance();
 
-        if ($walletBalance > 0) {
-            $curretAdjustment = $order->getAdjustments()->filter(function (Adjustment $adjustment) {
-                return $adjustment->getType() === "wallet";
-            })->first();
-            if ($curretAdjustment) {
-                $curretAdjustment->setAmount(-$walletBalance);
-            } else {
-                $discount = $this->container->get('sylius.factory.adjustment')->createNew();
-                $discount->setAmount(-$walletBalance);
-                $discount->setType("wallet");
-                $order->addAdjustment($discount);
-            }
-        }
-
-        $this->getDoctrine()->getManager()->flush();
+        $walletService->useWallet($order);
 
         /** @var SessionInterface $session */
         $session = $request->getSession();
@@ -121,16 +107,13 @@ class WalletController extends AbstractController
         /** @var CompositeCartContext $compositeCartContext */
         $compositeCartContext = $this->get('sylius.context.cart');
         $orderId = $compositeCartContext->getCart()->getId();
+        /** @var Order $order */
         $order = $orderRepository->findCartById($orderId);
 
-        $curretAdjustment = $order->getAdjustments()->filter(function (Adjustment $adjustment) {
-            return $adjustment->getType() === "wallet";
-        })->first();
+        /** @var WalletService $walletService */
+        $walletService = $this->get('workouse_digital_wallet.wallet_service');
 
-        if ($curretAdjustment) {
-            $order->removeAdjustment($curretAdjustment);
-            $this->getDoctrine()->getManager()->flush();
-        }
+        $walletService->removeWallet($order);
 
         /** @var SessionInterface $session */
         $session = $request->getSession();

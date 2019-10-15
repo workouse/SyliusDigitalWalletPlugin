@@ -19,6 +19,7 @@ services:
       - '@doctrine.orm.default_entity_manager'
       - '@sylius.currency_converter'
       - '@sylius.context.currency'
+      - '@sylius.factory.adjustment'
 
   workouse_digital_wallet.block_event_listener.sylius.shop.cart.summary.totals:
     class: Sylius\Bundle\UiBundle\Block\BlockEventListener

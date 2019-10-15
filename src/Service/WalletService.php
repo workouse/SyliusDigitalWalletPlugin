@@ -4,6 +4,9 @@
 namespace Workouse\DigitalWalletPlugin\Service;
 
 use Sylius\Component\Core\Model\ShopUserInterface;
+use Sylius\Component\Order\Factory\AdjustmentFactory;
+use Sylius\Component\Order\Model\Order;
+use Sylius\Component\Order\Model\OrderItem;
 use Workouse\DigitalWalletPlugin\Entity\Credit;
 use Workouse\DigitalWalletPlugin\Entity\CreditInterface;
 use Doctrine\ORM\EntityManager;
@@ -27,17 +30,22 @@ class WalletService
     /** @var CurrencyContextInterface */
     private $currencyContext;
 
+    /** @var AdjustmentFactory */
+    private $adjustmentFactory;
+
     public function __construct(
         Security $security,
         EntityManager $entityManager,
         CurrencyConverterInterface $currencyConverter,
-        CurrencyContextInterface $currencyContext
+        CurrencyContextInterface $currencyContext,
+        AdjustmentFactory $adjustmentFactory
     )
     {
         $this->security = $security;
         $this->entityManager = $entityManager;
         $this->currencyConverter = $currencyConverter;
         $this->currencyContext = $currencyContext;
+        $this->adjustmentFactory = $adjustmentFactory;
     }
 
     public function balance($customer = null)
@@ -53,25 +61,58 @@ class WalletService
 
     public function detractBalance(OrderInterface $order)
     {
-        $adjustment = $order->getAdjustments()->filter(function (Adjustment $adjustment) {
-            return $adjustment->getType() === 'wallet';
-        })->first();
+        $adjustment = array_sum(array_map(function (OrderItem $orderItem) {
+                return array_sum(array_map(function (Adjustment $adjustment) {
+                    if ($adjustment->getType() === CreditInterface::TYPE) {
+                        return $adjustment->getAmount();
+                    }
+                }, $orderItem->getAdjustments()->toArray()));
+            }, $order->getItems()->toArray())
+        );
 
-        if (!$adjustment) {
-            return;
+        if ($adjustment < 0) {
+            /** @var ShopUserInterface $user */
+            $user = $order->getUser();
+
+            $credit = new Credit();
+            $credit->setCustomer($user->getCustomer());
+            $credit->setAmount($adjustment);
+            $credit->setAction(CreditInterface::BUY);
+            $credit->setCurrencyCode($this->currencyContext->getCurrencyCode());
+            $this->entityManager->persist($credit);
+            $this->entityManager->flush();
+        }
+    }
+
+    public function useWallet(Order $order)
+    {
+        $this->removeWallet($order);
+
+        $adjustmentRate = ($this->balance() * 100) / $order->getTotal();
+
+        if ($adjustmentRate > 100) {
+            $adjustmentRate = 100;
         }
 
-        $order->removeAdjustment($adjustment);
+        array_map(function (OrderItem $orderItem) use ($adjustmentRate) {
+            $adjustment = $this->adjustmentFactory->createNew();
+            $adjustment->setType(CreditInterface::TYPE);
+            $adjustment->setAmount(-1 * ($orderItem->getTotal() / 100) * $adjustmentRate);
+            $adjustment->setLabel('Wallet');
+            $orderItem->addAdjustment($adjustment);
+        }, $order->getItems()->toArray());
 
-        /** @var ShopUserInterface $user */
-        $user = $order->getUser();
+        $this->entityManager->flush();
+    }
 
-        $credit = new Credit();
-        $credit->setCustomer($user);
-        $credit->setAmount(-$adjustment->getAmount() > $order->getTotal() ? -$order->getTotal() : $adjustment->getAmount());
-        $credit->setAction(CreditInterface::BUY);
-        $credit->setCurrencyCode($this->currencyContext->getCurrencyCode());
-        $this->entityManager->persist($credit);
+    public function removeWallet(Order $order)
+    {
+        array_map(function (OrderItem $orderItem) {
+            array_map(function (Adjustment $adjustment) use ($orderItem) {
+                $adjustment->getType() === CreditInterface::TYPE && $orderItem->removeAdjustment($adjustment);
+            }, $orderItem->getAdjustments()->toArray());
+        }, $order->getItems()->toArray());
+
         $this->entityManager->flush();
     }
 

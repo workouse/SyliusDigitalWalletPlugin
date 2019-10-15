@@ -6,18 +6,22 @@
     <a href="{{ path('workouse_digital_wallet_credit_use') }}">{{ 'workouse_digital_wallet.shop.ui.use'|trans }}</a> |
     <a href="{{ path('workouse_digital_wallet_credit_remove') }}">{{ 'workouse_digital_wallet.shop.ui.remove'|trans }}</a>
 
-    <table class="ui very basic table">
-        <tbody>
-        {% for adjustment in settings.cart.adjustments %}
+    {% set adjustmentTotal = 0 %}
+    {% for item in settings.cart.items %}
+        {% for adjustment in item.adjustments %}
             {% if adjustment.type == 'wallet' %}
-                <tr>
-                    <td>{{ 'workouse_digital_wallet.shop.ui.wallet'|trans }}:</td>
-                    <td class="right aligned">{{ money.format(adjustment.amount, sylius.currencyCode) }}</td>
-                </tr>
+                {% set adjustmentTotal = adjustmentTotal + adjustment.amount %}
             {% endif %}
         {% endfor %}
-
-
-        </tbody>
-    </table>
+    {% endfor %}
+    {% if adjustmentTotal < 0 %}
+        <table class="ui very basic table">
+            <tbody>
+            <tr>
+                <td>{{ 'workouse_digital_wallet.shop.ui.wallet'|trans }}:</td>
+                <td class="right aligned">{{ money.format(adjustmentTotal, sylius.currencyCode) }}</td>
+            </tr>
+            </tbody>
+        </table>
+    {% endif %}
 {% endif %}

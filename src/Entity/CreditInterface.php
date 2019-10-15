@@ -8,6 +8,7 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 interface CreditInterface extends ResourceInterface
 {
     const BUY = "buy";
+    const TYPE = "wallet";
 
     public function getCustomer();
 

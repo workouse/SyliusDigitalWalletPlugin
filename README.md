@@ -50,7 +50,7 @@ Configuration in your `config/routes.yaml` file:
 workouse_digital_wallet:
     referrer:
         action: 'reference'
-        amount: 500
+        amount: 500 #must be calculated as amount * 100 for fits sylius money format.
         currency_code: 'USD'
     invitee:
         action: 'reference'

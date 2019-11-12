@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Workouse\DigitalWalletPlugin\Menu;
 
@@ -16,7 +17,7 @@ final class AdminCustomerShowMenuListener
             $menu
                 ->addChild('impersonate', [
                     'route' => 'workouse_digital_wallet_credit_index',
-                    'routeParameters' => ['customerId' => $customer->getId()]
+                    'routeParameters' => ['customerId' => $customer->getId()],
                 ])
                 ->setAttribute('type', 'link')
                 ->setLabel('workouse_digital_wallet.admin.menu.credits')

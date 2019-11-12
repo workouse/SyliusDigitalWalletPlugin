@@ -1,4 +1,4 @@
 workouse_digital_wallet:
-  balance_used: 'Balance Used'
+  balance_used: 'amount Balance Used'
   balance_removed: 'Balance Removed'
   credit_added: 'Credit has been successfully added.'

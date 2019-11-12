@@ -1,18 +1,23 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Workouse\DigitalWalletPlugin\Controller;
 
+use Sylius\Bundle\MoneyBundle\Formatter\MoneyFormatterInterface;
+use Sylius\Component\Currency\Context\CurrencyContextInterface;
+use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Order\Context\CompositeCartContext;
 use Sylius\Component\Order\Model\Order;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Workouse\DigitalWalletPlugin\Entity\Credit;
-use Workouse\DigitalWalletPlugin\Form\Type\CreditType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Workouse\DigitalWalletPlugin\Entity\Credit;
+use Workouse\DigitalWalletPlugin\Form\Type\CreditType;
 use Workouse\DigitalWalletPlugin\Service\WalletService;
 
 class WalletController extends AbstractController
@@ -20,7 +25,7 @@ class WalletController extends AbstractController
     public function indexAction($customerId): Response
     {
         $customer = $this->container->get('sylius.repository.customer')->findOneBy([
-            'id' => $customerId
+            'id' => $customerId,
         ]);
 
         if (!$customer) {
@@ -28,20 +33,19 @@ class WalletController extends AbstractController
         }
 
         $credits = $this->getDoctrine()->getRepository(Credit::class)->findBy([
-            'customer' => $customer
+            'customer' => $customer,
         ]);
 
         return $this->render('@WorkouseDigitalWalletPlugin/admin/index.html.twig', [
             'credits' => $credits,
-            'customer' => $customer
+            'customer' => $customer,
         ]);
     }
 
     public function newAction($customerId, Request $request): Response
     {
-
         $customer = $this->container->get('sylius.repository.customer')->findOneBy([
-            'id' => $customerId
+            'id' => $customerId,
         ]);
 
         if (!$customer) {
@@ -73,7 +77,7 @@ class WalletController extends AbstractController
 
         return $this->render('@WorkouseDigitalWalletPlugin/admin/new.html.twig', [
             'form' => $form->createView(),
-            'customer' => $customer
+            'customer' => $customer,
         ]);
     }
 
@@ -88,17 +92,28 @@ class WalletController extends AbstractController
         /** @var WalletService $walletService */
         $walletService = $this->get('workouse_digital_wallet.wallet_service');
 
-        $walletService->useWallet($order);
-
         /** @var SessionInterface $session */
         $session = $request->getSession();
 
+        /** @var CurrencyContextInterface $currencyContext */
+        $currencyContext = $this->get('sylius.context.currency');
+        $currencyCode = $currencyContext->getCurrencyCode();
+
+        /** @var LocaleContextInterface $localeContext */
+        $localeContext = $this->get('sylius.context.locale');
+        $localeCode = $localeContext->getLocaleCode();
+
+        /** @var MoneyFormatterInterface $moneyFormatter */
+        $moneyFormatter = $this->get('sylius.money_formatter');
+
+        /** @var TranslatorInterface $translator */
+        $translator = $this->get('translator');
+
         /** @var FlashBagInterface $flashBag */
         $flashBag = $session->getBag('flashes');
-        $flashBag->add('success', 'workouse_digital_wallet.balance_used');
+        $flashBag->add('success', $translator->trans('workouse_digital_wallet.balance_used', ['amount' => $moneyFormatter->format($walletService->useWallet($order), $currencyCode, $localeCode)], 'flashes'));
 
         return new RedirectResponse($this->generateUrl('sylius_shop_cart_summary'));
-
     }
 
     public function removeAction(Request $request)

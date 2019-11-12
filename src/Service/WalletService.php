@@ -1,20 +1,21 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Workouse\DigitalWalletPlugin\Service;
 
-use Sylius\Component\Core\Model\ShopUserInterface;
-use Sylius\Component\Order\Factory\AdjustmentFactory;
-use Sylius\Component\Order\Model\Order;
-use Sylius\Component\Order\Model\OrderItem;
-use Workouse\DigitalWalletPlugin\Entity\Credit;
-use Workouse\DigitalWalletPlugin\Entity\CreditInterface;
 use Doctrine\ORM\EntityManager;
+use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Core\Model\ShopUserInterface;
 use Sylius\Component\Currency\Context\CurrencyContextInterface;
 use Sylius\Component\Currency\Converter\CurrencyConverterInterface;
+use Sylius\Component\Order\Factory\AdjustmentFactory;
 use Sylius\Component\Order\Model\Adjustment;
+use Sylius\Component\Order\Model\Order;
+use Sylius\Component\Order\Model\OrderItem;
 use Symfony\Component\Security\Core\Security;
-use Sylius\Component\Core\Model\OrderInterface;
+use Workouse\DigitalWalletPlugin\Entity\Credit;
+use Workouse\DigitalWalletPlugin\Entity\CreditInterface;
 
 class WalletService
 {
@@ -39,8 +40,7 @@ class WalletService
         CurrencyConverterInterface $currencyConverter,
         CurrencyContextInterface $currencyContext,
         AdjustmentFactory $adjustmentFactory
-    )
-    {
+    ) {
         $this->security = $security;
         $this->entityManager = $entityManager;
         $this->currencyConverter = $currencyConverter;
@@ -52,22 +52,23 @@ class WalletService
     {
         /** @var ShopUserInterface $user */
         $user = $this->security->getUser();
+
         return array_sum(array_map(function (Credit $credit) {
             return $this->currencyConverter->convert($credit->getAmount(), $credit->getCurrencyCode(), $this->currencyContext->getCurrencyCode());
         }, $this->entityManager->getRepository(Credit::class)->findBy([
-            'customer' => $customer ? $customer : $user->getCustomer()
+            'customer' => $customer ? $customer : $user->getCustomer(),
         ])));
     }
 
     public function detractBalance(OrderInterface $order)
     {
         $adjustment = array_sum(array_map(function (OrderItem $orderItem) {
-                return array_sum(array_map(function (Adjustment $adjustment) {
-                    if ($adjustment->getType() === CreditInterface::TYPE) {
-                        return $adjustment->getAmount();
-                    }
-                }, $orderItem->getAdjustments()->toArray()));
-            }, $order->getItems()->toArray())
+            return array_sum(array_map(function (Adjustment $adjustment) {
+                if ($adjustment->getType() === CreditInterface::TYPE) {
+                    return $adjustment->getAmount();
+                }
+            }, $orderItem->getAdjustments()->toArray()));
+        }, $order->getItems()->toArray())
         );
 
         if ($adjustment < 0) {
@@ -94,23 +95,29 @@ class WalletService
             $adjustmentRate = 100;
         }
 
-        array_map(function (OrderItem $orderItem) use ($adjustmentRate) {
-            $adjustment = $this->adjustmentFactory->createNew();
-            $adjustment->setType(CreditInterface::TYPE);
-            $amount = -1 * ($orderItem->getTotal() / 100) * $adjustmentRate;
-            $adjustment->setAmount((int)$amount);
-            $adjustment->setLabel('Wallet');
-            $orderItem->addAdjustment($adjustment);
-        }, $order->getItems()->toArray());
+        $adjustmentTotal = array_sum(
+                array_map(function (OrderItem $orderItem) use ($adjustmentRate) {
+                    $adjustment = $this->adjustmentFactory->createNew();
+                    $adjustment->setType(CreditInterface::TYPE);
+                    $amount = -1 * ($orderItem->getTotal() / 100) * $adjustmentRate;
+                    $adjustment->setAmount((int) $amount);
+                    $adjustment->setLabel('Wallet');
+                    $orderItem->addAdjustment($adjustment);
+
+                    return $adjustment->getAmount();
+                }, $order->getItems()->toArray())
+            ) * -1;
 
         $this->entityManager->flush();
+
+        return $adjustmentTotal > 0 ? $adjustmentTotal : 0;
     }
 
     public function removeWallet(Order $order)
     {
         array_map(function (OrderItem $orderItem) {
             array_map(function (Adjustment $adjustment) use ($orderItem) {
-                if ($adjustment->getType() === CreditInterface::TYPE){
+                if ($adjustment->getType() === CreditInterface::TYPE) {
                     $orderItem->removeAdjustment($adjustment);
                 }
             }, $orderItem->getAdjustments()->toArray());
@@ -118,5 +125,4 @@ class WalletService
 
         $this->entityManager->flush();
     }
-
 }

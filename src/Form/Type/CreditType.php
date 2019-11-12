@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Workouse\DigitalWalletPlugin\Form\Type;
-
 
 use Sylius\Component\Currency\Model\Currency;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -21,11 +21,11 @@ class CreditType extends AbstractType
                 'label' => 'workouse_digital_wallet.admin.form.amount',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'workouse_digital_wallet.amount.not_blank'
+                        'message' => 'workouse_digital_wallet.amount.not_blank',
                     ]),
                     new Positive([
-                        'message' => 'workouse_digital_wallet.amount.positive'
-                    ])
+                        'message' => 'workouse_digital_wallet.amount.positive',
+                    ]),
                 ],
             ])
             ->add('currencyCode', EntityType::class, [
@@ -34,7 +34,7 @@ class CreditType extends AbstractType
                 'choice_label' => 'code',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'workouse_digital_wallet.currency_code.not_blank'
+                        'message' => 'workouse_digital_wallet.currency_code.not_blank',
                     ]),
                 ],
             ])
@@ -42,7 +42,7 @@ class CreditType extends AbstractType
                 'label' => 'workouse_digital_wallet.admin.form.action',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'workouse_digital_wallet.action.not_blank'
+                        'message' => 'workouse_digital_wallet.action.not_blank',
                     ]),
                 ],
             ]);

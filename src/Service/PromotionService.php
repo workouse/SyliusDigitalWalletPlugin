@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Workouse\DigitalWalletPlugin\Service;
 
@@ -22,8 +23,7 @@ class PromotionService implements PromotionInterface
         EntityManager $entityManager,
         $referrer,
         $invitee
-    )
-    {
+    ) {
         $this->entityManager = $entityManager;
         $this->referrer = $referrer;
         $this->invitee = $invitee;
@@ -55,7 +55,7 @@ class PromotionService implements PromotionInterface
     {
         $referrer = $this->entityManager->getRepository(Reference::class)->findOneBy([
             'referrer' => $customer,
-            'status' => false
+            'status' => false,
         ]);
 
         if ($referrer) {

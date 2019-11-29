@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Tests\Workouse\SyliusDigitalWalletPlugin\Behat\Context\Ui\admin;
 
@@ -32,8 +33,7 @@ class WalletContext implements Context
         CurrentPageResolverInterface $currentPageResolver,
         NotificationCheckerInterface $notificationChecker,
         WalletNewPage $createPage
-    )
-    {
+    ) {
         $this->sharedStorage = $sharedStorage;
         $this->currentPageResolver = $currentPageResolver;
         $this->notificationChecker = $notificationChecker;

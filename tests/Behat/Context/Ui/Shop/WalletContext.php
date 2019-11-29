@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Tests\Workouse\SyliusDigitalWalletPlugin\Behat\Context\Ui\Shop;
 
@@ -16,7 +17,6 @@ use Workouse\SyliusDigitalWalletPlugin\Entity\Credit;
 
 class WalletContext implements Context
 {
-
     /** @var DashboardPageInterface */
     private $dashboardPage;
 
@@ -42,8 +42,7 @@ class WalletContext implements Context
         NotificationCheckerInterface $notificationChecker,
         UserRepositoryInterface $userRepository,
         WalletRemovePage $walletRemovePage
-    )
-    {
+    ) {
         $this->dashboardPage = $dashboardPage;
         $this->entityManager = $entityManager;
         $this->walletUsePage = $walletUsePage;
@@ -71,14 +70,14 @@ class WalletContext implements Context
     /**
      * @Given I have :amount :currency_code credit with :email
      */
-    public function iHaveCreditWith($amount = 100, $currencyCode = "USD", $email)
+    public function iHaveCreditWith($amount = 100, $currencyCode = 'USD', $email)
     {
         $user = $this->userRepository->findOneByEmail($email);
         $credit = new Credit();
         $credit->setAmount($amount);
         $credit->setCurrencyCode($currencyCode);
         $credit->setCustomer($user->getCustomer());
-        $credit->setAction("test");
+        $credit->setAction('test');
         $this->entityManager->persist($credit);
         $this->entityManager->flush();
     }

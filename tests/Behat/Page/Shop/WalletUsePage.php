@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Tests\Workouse\SyliusDigitalWalletPlugin\Behat\Page\Shop;
 
@@ -18,7 +19,7 @@ class WalletUsePage extends SymfonyPage
     public function getCartTotal()
     {
         $cartTotalText = $this->getElement('cart_total')->getText();
-        
+
         if (strpos($cartTotalText, ',') !== false) {
             return strstr($cartTotalText, ',', true);
         }

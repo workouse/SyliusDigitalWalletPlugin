@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Tests\Workouse\SyliusDigitalWalletPlugin\Behat\Page\Shop;
 
@@ -13,6 +14,7 @@ class DashboardPage extends BaseDashboardPage
     public function hasCustomerCredit()
     {
         $customerCreditText = $this->getElement('CustomerCredit')->getText();
+
         return $customerCreditText;
     }
 

@@ -6,9 +6,9 @@ namespace Workouse\SyliusDigitalWalletPlugin\Service;
 
 use Doctrine\ORM\EntityManager;
 use Sylius\Component\Customer\Model\Customer;
-use Workouse\SyliusDigitalWalletPlugin\Entity\Credit;
 use Workouse\ReferralMarketingPlugin\Entity\Reference;
 use Workouse\ReferralMarketingPlugin\Service\PromotionInterface;
+use Workouse\SyliusDigitalWalletPlugin\Entity\Credit;
 
 class PromotionService implements PromotionInterface
 {

@@ -1,18 +1,18 @@
 services:
   workouse_digital_wallet.listener.admin.customer.show.menu_builder:
-    class: Workouse\DigitalWalletPlugin\Menu\AdminCustomerShowMenuListener
+    class: Workouse\SyliusDigitalWalletPlugin\Menu\AdminCustomerShowMenuListener
     tags:
       - { name: kernel.event_listener, event: sylius.menu.admin.customer.show, method: addAdminCustomerShowMenuItems }
 
   workouse_digital_wallet.block_event_listener.sylius.shop.account.dashboard.after_information:
     class: Sylius\Bundle\UiBundle\Block\BlockEventListener
     arguments:
-      - 'WorkouseDigitalWalletPlugin:shop:customer_credit_block.html.twig'
+      - 'WorkouseSyliusDigitalWalletPlugin:shop:customer_credit_block.html.twig'
     tags:
       - { name: kernel.event_listener, event: sonata.block.event.sylius.shop.account.dashboard.after_information, method: onBlockEvent }
 
   workouse_digital_wallet.wallet_service:
-    class: Workouse\DigitalWalletPlugin\Service\WalletService
+    class: Workouse\SyliusDigitalWalletPlugin\Service\WalletService
     public: true
     arguments:
       - '@security.helper'
@@ -24,12 +24,12 @@ services:
   workouse_digital_wallet.block_event_listener.sylius.shop.cart.summary.totals:
     class: Sylius\Bundle\UiBundle\Block\BlockEventListener
     arguments:
-      - 'WorkouseDigitalWalletPlugin:shop:cart_summary_credit.html.twig'
+      - 'WorkouseSyliusDigitalWalletPlugin:shop:cart_summary_credit.html.twig'
     tags:
       - { name: kernel.event_listener, event: sonata.block.event.sylius.shop.cart.summary.totals, method: onBlockEvent }
 
   workouse_digital_wallet.promotion:
-    class: Workouse\DigitalWalletPlugin\Service\PromotionService
+    class: Workouse\SyliusDigitalWalletPlugin\Service\PromotionService
     public: true
     arguments:
       - '@doctrine.orm.entity_manager'

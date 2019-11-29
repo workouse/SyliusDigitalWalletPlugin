@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Workouse\DigitalWalletPlugin;
+namespace Workouse\SyliusDigitalWalletPlugin;
 
 use Sylius\Bundle\CoreBundle\Application\SyliusPluginTrait;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-final class WorkouseDigitalWalletPlugin extends Bundle
+final class WorkouseSyliusDigitalWalletPlugin extends Bundle
 {
     use SyliusPluginTrait;
 }

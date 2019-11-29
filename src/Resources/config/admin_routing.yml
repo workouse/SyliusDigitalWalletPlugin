@@ -1,12 +1,12 @@
 workouse_digital_wallet_credit_index:
   path: /customers/{customerId}/credit
   defaults:
-    _controller: WorkouseDigitalWalletPlugin:Wallet:index
+    _controller: WorkouseSyliusDigitalWalletPlugin:Wallet:index
     customerId: ~
 
 
 workouse_digital_wallet_credit_new:
   path: /customers/{customerId}/credit/new
   defaults:
-    _controller: WorkouseDigitalWalletPlugin:Wallet:new
+    _controller: WorkouseSyliusDigitalWalletPlugin:Wallet:new
     customerId: ~

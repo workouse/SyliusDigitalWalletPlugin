@@ -1,4 +1,4 @@
 suites:
     main:
-        namespace: Workouse\DigitalWalletPlugin
-        psr4_prefix: Workouse\DigitalWalletPlugin
+        namespace: Workouse\SyliusDigitalWalletPlugin
+        psr4_prefix: Workouse\SyliusDigitalWalletPlugin

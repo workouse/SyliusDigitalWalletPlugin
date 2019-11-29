@@ -1,2 +1,2 @@
 workouse_digital_wallet_plugin_admin:
-  resource: "@WorkouseDigitalWalletPlugin/Resources/config/routing.yml"
+  resource: "@WorkouseSyliusDigitalWalletPlugin/Resources/config/routing.yml"

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Tests\Workouse\DigitalWalletPlugin\Behat\Page\Shop;
+namespace Tests\Workouse\SyliusDigitalWalletPlugin\Behat\Page\Shop;
 
 use Sylius\Behat\Page\Shop\Account\DashboardPage as BaseDashboardPage;
 

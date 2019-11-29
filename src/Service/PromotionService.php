@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Workouse\DigitalWalletPlugin\Service;
+namespace Workouse\SyliusDigitalWalletPlugin\Service;
 
 use Doctrine\ORM\EntityManager;
 use Sylius\Component\Customer\Model\Customer;
-use Workouse\DigitalWalletPlugin\Entity\Credit;
+use Workouse\SyliusDigitalWalletPlugin\Entity\Credit;
 use Workouse\ReferralMarketingPlugin\Entity\Reference;
 use Workouse\ReferralMarketingPlugin\Service\PromotionInterface;
 

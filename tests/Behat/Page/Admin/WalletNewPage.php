@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Tests\Workouse\DigitalWalletPlugin\Behat\Page\Admin;
+namespace Tests\Workouse\SyliusDigitalWalletPlugin\Behat\Page\Admin;
 
 use FriendsOfBehat\PageObjectExtension\Page\SymfonyPage;
-use Tests\Workouse\DigitalWalletPlugin\Behat\Behaviour\ContainsErrorTrait;
+use Tests\Workouse\SyliusDigitalWalletPlugin\Behat\Behaviour\ContainsErrorTrait;
 
 class WalletNewPage extends SymfonyPage
 {

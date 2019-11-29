@@ -1,9 +1,9 @@
 workouse_digital_wallet_credit_use:
   path: /credit/use
   defaults:
-    _controller: WorkouseDigitalWalletPlugin:Wallet:use
+    _controller: WorkouseSyliusDigitalWalletPlugin:Wallet:use
 
 workouse_digital_wallet_credit_remove:
   path: /credit/remove
   defaults:
-    _controller: WorkouseDigitalWalletPlugin:Wallet:remove
+    _controller: WorkouseSyliusDigitalWalletPlugin:Wallet:remove

@@ -1,4 +1,4 @@
-workouse_digital_wallet:
+workouse_sylius_digital_wallet:
   referrer:
     action: 'reference'
     amount: 500

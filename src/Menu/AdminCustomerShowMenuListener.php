@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Workouse\DigitalWalletPlugin\Menu;
+namespace Workouse\SyliusDigitalWalletPlugin\Menu;
 
 use Sylius\Bundle\AdminBundle\Event\CustomerShowMenuBuilderEvent;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Workouse\DigitalWalletPlugin\Entity;
+namespace Workouse\SyliusDigitalWalletPlugin\Entity;
 
 use Sylius\Component\Resource\Model\ResourceInterface;
 

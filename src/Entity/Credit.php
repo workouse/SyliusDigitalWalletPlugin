@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Workouse\DigitalWalletPlugin\Entity;
+namespace Workouse\SyliusDigitalWalletPlugin\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 

@@ -1,5 +1,5 @@
 {
-    "name": "workouse/digital-wallet-sylius",
+    "name": "workouse/sylius-digital-wallet-plugin",
     "type": "sylius-plugin",
     "keywords": ["sylius", "sylius-plugin"],
     "description": "Digital Wallet Bundle for Sylius E-Commerce",
@@ -44,8 +44,8 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Workouse\\DigitalWalletPlugin\\": "src/",
-            "Tests\\Workouse\\DigitalWalletPlugin\\": "tests/"
+            "Workouse\\SyliusDigitalWalletPlugin\\": "src/",
+            "Tests\\Workouse\\SyliusDigitalWalletPlugin\\": "tests/"
         }
     },
     "autoload-dev": {

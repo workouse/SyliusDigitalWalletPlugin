@@ -1,9 +1,9 @@
 workouse_digital_wallet_plugin_admin:
-  resource: "@WorkouseDigitalWalletPlugin/Resources/config/admin_routing.yml"
+  resource: "@WorkouseSyliusDigitalWalletPlugin/Resources/config/admin_routing.yml"
   prefix: /admin
 
 workouse_digital_wallet_plugin_shop:
-  resource: "@WorkouseDigitalWalletPlugin/Resources/config/shop_routing.yml"
+  resource: "@WorkouseSyliusDigitalWalletPlugin/Resources/config/shop_routing.yml"
   prefix: /{_locale}
   requirements:
     _locale: ^[a-z]{2}(?:_[A-Z]{2})?$

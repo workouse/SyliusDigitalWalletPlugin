@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Workouse\DigitalWalletPlugin\Service;
+namespace Workouse\SyliusDigitalWalletPlugin\Service;
 
 use Doctrine\ORM\EntityManager;
 use Sylius\Component\Core\Model\OrderInterface;
@@ -14,8 +14,8 @@ use Sylius\Component\Order\Model\Adjustment;
 use Sylius\Component\Order\Model\Order;
 use Sylius\Component\Order\Model\OrderItem;
 use Symfony\Component\Security\Core\Security;
-use Workouse\DigitalWalletPlugin\Entity\Credit;
-use Workouse\DigitalWalletPlugin\Entity\CreditInterface;
+use Workouse\SyliusDigitalWalletPlugin\Entity\Credit;
+use Workouse\SyliusDigitalWalletPlugin\Entity\CreditInterface;
 
 class WalletService
 {

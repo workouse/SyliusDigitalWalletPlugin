@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Workouse\DigitalWalletPlugin\Behat\Behaviour;
+namespace Tests\Workouse\SyliusDigitalWalletPlugin\Behat\Behaviour;
 
 use Behat\Mink\Element\NodeElement;
 use Sylius\Behat\Behaviour\DocumentAccessor;

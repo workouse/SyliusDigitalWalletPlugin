@@ -1,6 +1,6 @@
 <?php
 
-use Tests\Workouse\DigitalWalletPlugin\Application\Kernel;
+use Tests\Workouse\SyliusDigitalWalletPlugin\Application\Kernel;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
 

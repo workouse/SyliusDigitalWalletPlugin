@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Workouse\DigitalWalletPlugin\Controller;
+namespace Workouse\SyliusDigitalWalletPlugin\Controller;
 
 use Sylius\Bundle\MoneyBundle\Formatter\MoneyFormatterInterface;
 use Sylius\Component\Currency\Context\CurrencyContextInterface;
@@ -16,9 +16,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Workouse\DigitalWalletPlugin\Entity\Credit;
-use Workouse\DigitalWalletPlugin\Form\Type\CreditType;
-use Workouse\DigitalWalletPlugin\Service\WalletService;
+use Workouse\SyliusDigitalWalletPlugin\Entity\Credit;
+use Workouse\SyliusDigitalWalletPlugin\Form\Type\CreditType;
+use Workouse\SyliusDigitalWalletPlugin\Service\WalletService;
 
 class WalletController extends AbstractController
 {
@@ -36,7 +36,7 @@ class WalletController extends AbstractController
             'customer' => $customer,
         ]);
 
-        return $this->render('@WorkouseDigitalWalletPlugin/admin/index.html.twig', [
+        return $this->render('@WorkouseSyliusDigitalWalletPlugin/admin/index.html.twig', [
             'credits' => $credits,
             'customer' => $customer,
         ]);
@@ -75,7 +75,7 @@ class WalletController extends AbstractController
             return $this->redirectToRoute('workouse_digital_wallet_credit_index', ['customerId' => $customerId]);
         }
 
-        return $this->render('@WorkouseDigitalWalletPlugin/admin/new.html.twig', [
+        return $this->render('@WorkouseSyliusDigitalWalletPlugin/admin/new.html.twig', [
             'form' => $form->createView(),
             'customer' => $customer,
         ]);

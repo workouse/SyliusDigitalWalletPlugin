@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Workouse\DigitalWalletPlugin\Form\Type;
+namespace Workouse\SyliusDigitalWalletPlugin\Form\Type;
 
 use Sylius\Component\Currency\Model\Currency;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;

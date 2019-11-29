@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Tests\Workouse\DigitalWalletPlugin\Behat\Context\Ui\admin;
+namespace Tests\Workouse\SyliusDigitalWalletPlugin\Behat\Context\Ui\admin;
 
 use Behat\Behat\Context\Context;
 use FriendsOfBehat\PageObjectExtension\Page\SymfonyPageInterface;
@@ -10,7 +10,7 @@ use Sylius\Behat\Service\NotificationCheckerInterface;
 use Sylius\Behat\Service\Resolver\CurrentPageResolverInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
-use Tests\Workouse\DigitalWalletPlugin\Behat\Page\Admin\WalletNewPage;
+use Tests\Workouse\SyliusDigitalWalletPlugin\Behat\Page\Admin\WalletNewPage;
 use Webmozart\Assert\Assert;
 
 class WalletContext implements Context

@@ -1,24 +1,24 @@
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/workouse/digital-wallet-sylius/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/workouse/digital-wallet-sylius/?branch=master)
-[![Build Status](https://scrutinizer-ci.com/g/workouse/digital-wallet-sylius/badges/build.png?b=master)](https://scrutinizer-ci.com/g/workouse/digital-wallet-sylius/build-status/master)
-## digital-wallet-sylius
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/workouse/sylius-digital-wallet-plugin/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/workouse/sylius-digital-wallet-plugin/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/workouse/sylius-digital-wallet-plugin/badges/build.png?b=master)](https://scrutinizer-ci.com/g/workouse/sylius-digital-wallet-plugin/build-status/master)
+## Workouse Digital Wallet Plugin
 Digital wallet plugin for for Sylius E-Commerce. Adds a credit system feature to customers.
 
 Screenshots:
-<img src="https://github.com/workouse/digital-wallet-sylius/blob/master/screenshot_1.png" width="100%">
-<img src="https://github.com/workouse/digital-wallet-sylius/blob/master/screenshot_2.png" width="100%">
-<img src="https://github.com/workouse/digital-wallet-sylius/blob/master/screenshot_3.png" width="100%">
-<img src="https://github.com/workouse/digital-wallet-sylius/blob/master/screenshot_4.png" width="100%">
+<img src="https://github.com/workouse/sylius-digital-wallet-plugin/blob/master/screenshot_1.png" width="100%">
+<img src="https://github.com/workouse/sylius-digital-wallet-plugin/blob/master/screenshot_2.png" width="100%">
+<img src="https://github.com/workouse/sylius-digital-wallet-plugin/blob/master/screenshot_3.png" width="100%">
+<img src="https://github.com/workouse/sylius-digital-wallet-plugin/blob/master/screenshot_4.png" width="100%">
 
 ## Installation
 ```bash
-$ composer require workouse/digital-wallet-sylius
+$ composer require workouse/sylius-digital-wallet-plugin
 ```
 Add plugin dependencies to your `config/bundles.php` file:
 ```php
 return [
     ...
 
-    Workouse\DigitalWalletPlugin\WorkouseDigitalWalletPlugin::class => ['all' => true],
+    Workouse\SyliusDigitalWalletPlugin\WorkouseSyliusDigitalWalletPlugin::class => ['all' => true],
 ];
 ```
 
@@ -30,7 +30,7 @@ Import required config in your `config/packages/_sylius.yaml` file:
 imports:
     ...
     
-    - { resource: "@WorkouseDigitalWalletPlugin/Resources/config/config.yml" }
+    - { resource: "@WorkouseSyliusDigitalWalletPlugin/Resources/config/config.yml" }
 ```
 
 Import routing in your `config/routes.yaml` file:
@@ -41,7 +41,7 @@ Import routing in your `config/routes.yaml` file:
 ...
 
 workouse_digital_wallet_plugin:
-    resource: "@WorkouseDigitalWalletPlugin/Resources/config/routing.yml"
+    resource: "@WorkouseSyliusDigitalWalletPlugin/Resources/config/routing.yml"
 ```
 
 Configuration in your `config/routes.yaml` file:

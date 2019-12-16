@@ -13,6 +13,7 @@ use Sylius\Component\Order\Factory\AdjustmentFactory;
 use Sylius\Component\Order\Model\Adjustment;
 use Sylius\Component\Order\Model\Order;
 use Sylius\Component\Order\Model\OrderItem;
+use Sylius\Component\Order\Processor\CompositeOrderProcessor;
 use Symfony\Component\Security\Core\Security;
 use Workouse\SyliusDigitalWalletPlugin\Entity\Credit;
 use Workouse\SyliusDigitalWalletPlugin\Entity\CreditInterface;
@@ -34,18 +35,23 @@ class WalletService
     /** @var AdjustmentFactory */
     private $adjustmentFactory;
 
+    /** @var CompositeOrderProcessor */
+    private $orderProcessor;
+
     public function __construct(
         Security $security,
         EntityManager $entityManager,
         CurrencyConverterInterface $currencyConverter,
         CurrencyContextInterface $currencyContext,
-        AdjustmentFactory $adjustmentFactory
+        AdjustmentFactory $adjustmentFactory,
+        CompositeOrderProcessor $orderProcessor
     ) {
         $this->security = $security;
         $this->entityManager = $entityManager;
         $this->currencyConverter = $currencyConverter;
         $this->currencyContext = $currencyContext;
         $this->adjustmentFactory = $adjustmentFactory;
+        $this->orderProcessor = $orderProcessor;
     }
 
     public function balance($customer = null)
@@ -81,6 +87,7 @@ class WalletService
             $credit->setAction(CreditInterface::BUY);
             $credit->setCurrencyCode($this->currencyContext->getCurrencyCode());
             $this->entityManager->persist($credit);
+            $this->orderProcessor->process($order);
             $this->entityManager->flush();
         }
     }
@@ -107,7 +114,7 @@ class WalletService
                     return $adjustment->getAmount();
                 }, $order->getItems()->toArray())
             ) * -1;
-
+        $this->orderProcessor->process($order);
         $this->entityManager->flush();
 
         return $adjustmentTotal > 0 ? $adjustmentTotal : 0;
@@ -122,7 +129,7 @@ class WalletService
                 }
             }, $orderItem->getAdjustments()->toArray());
         }, $order->getItems()->toArray());
-
+        $this->orderProcessor->process($order);
         $this->entityManager->flush();
     }
 }

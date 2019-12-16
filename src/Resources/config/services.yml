@@ -20,6 +20,7 @@ services:
       - '@sylius.currency_converter'
       - '@sylius.context.currency'
       - '@sylius.factory.adjustment'
+      - '@sylius.order_processing.order_processor.composite'
 
   workouse_digital_wallet.block_event_listener.sylius.shop.cart.summary.totals:
     class: Sylius\Bundle\UiBundle\Block\BlockEventListener

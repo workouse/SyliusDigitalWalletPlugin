@@ -6,8 +6,8 @@ namespace Workouse\SyliusDigitalWalletPlugin\Service;
 
 use Doctrine\ORM\EntityManager;
 use Sylius\Component\Customer\Model\Customer;
-use Workouse\ReferralMarketingPlugin\Entity\Reference;
-use Workouse\ReferralMarketingPlugin\Service\PromotionInterface;
+use Workouse\SyliusReferralMarketingPlugin\Entity\Reference;
+use Workouse\SyliusReferralMarketingPlugin\Service\PromotionInterface;
 use Workouse\SyliusDigitalWalletPlugin\Entity\Credit;
 
 class PromotionService implements PromotionInterface
